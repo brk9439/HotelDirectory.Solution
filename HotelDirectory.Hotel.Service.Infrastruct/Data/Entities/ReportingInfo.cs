@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace HotelDirectory.Hotel.Service.Infrastruct.Data.Entities
 {
-    public class HotelsInfo
+    public class ReportingInfo
     {
         public Guid Id { get; set; }
-        public string PersonName { get; set; }
-        public string PersonSurname { get; set; }
-        public string CompanyName { get; set; }
-        public int Status { get; set; }
-        public string? Description { get; set; }
+        public string Location { get; set; }
+        public int HotelCount { get; set; }
+        public int PhoneCount { get; set; }
+        public DateTime GetDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-
-        public HotelsInfo()
+        public Enum.ReportStatus Status { get; set; }
+        public ReportingInfo()
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTime.Now;

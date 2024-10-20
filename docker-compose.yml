@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  # RabbitMQ Servisi
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5673:5672"  # Mesajla�ma portu
+      - "15673:15672"  # Y�netim paneli portu
+    volumes:
+      - /var/lib/rabbitmq
+    networks:
+      - hotel-network
+
+  hotel-postgres:
+    image: postgres:latest
+    hostname: "hotel"
+    environment:
+      POSTGRES_USER: hotel_user
+      POSTGRES_PASSWORD: hotel_password
+      POSTGRES_DB: hoteldb
+    ports:
+      - "5435:5432"
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - hotel-network
+
+networks:
+  hotel-network:
+    driver: bridge

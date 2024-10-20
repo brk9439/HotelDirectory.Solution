@@ -14,5 +14,11 @@ namespace HotelDirectory.Hotel.Service.Infrastruct.Data.Entities
             MailAddress = 2,
             Location = 3,
         }
+
+        public enum ReportStatus
+        {
+            Waiting =0,
+            Completed =1,
+        }
     }
 }
