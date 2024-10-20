@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Hotel.Servic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Reporting.Service", "HotelDirectory.Reporting.Service", "{5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Hotel.Service.Application", "HotelDirectory.Hotel.Service.Application\HotelDirectory.Hotel.Service.Application.csproj", "{DBE6389F-7167-42FA-BDC3-CFC29B6AEE34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Hotel.Service.Application", "HotelDirectory.Hotel.Service.Application\HotelDirectory.Hotel.Service.Application.csproj", "{DBE6389F-7167-42FA-BDC3-CFC29B6AEE34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Hotel.Service.Domain", "HotelDirectory.Hotel.Service.Domain\HotelDirectory.Hotel.Service.Domain.csproj", "{CB7F0C68-AB64-481F-B921-9A9E96612DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Hotel.Service.Domain", "HotelDirectory.Hotel.Service.Domain\HotelDirectory.Hotel.Service.Domain.csproj", "{CB7F0C68-AB64-481F-B921-9A9E96612DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Hotel.Service.Infrastruct", "HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastruct.csproj", "{B4D46B1E-A1EF-4FF4-9EC5-A1EDE299EC69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Hotel.Service.Infrastructure", "HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastructure.csproj", "{B4D46B1E-A1EF-4FF4-9EC5-A1EDE299EC69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Shared", "HotelDirectory.Shared", "{2BA65769-9F1A-4415-988B-1061D0E01E29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Shared.DataAccess", "HotelDirectory.Shared.DataAccess\HotelDirectory.Shared.DataAccess.csproj", "{9A954299-9668-4DDE-BAD0-DD290F63E247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Shared.DataAccess", "HotelDirectory.Shared.DataAccess\HotelDirectory.Shared.DataAccess.csproj", "{9A954299-9668-4DDE-BAD0-DD290F63E247}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelDirectory.Hotel.Service.Infrastruct.Data.Entities
+namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Entities
 {
     public class Enum
     {

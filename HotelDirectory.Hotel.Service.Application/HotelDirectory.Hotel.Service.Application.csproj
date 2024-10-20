@@ -14,4 +14,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

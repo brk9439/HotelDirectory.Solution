@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelDirectory.Hotel.Service.Infrastruct.Data.Entities
+namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Entities
 {
-    public class HotelsInfo
+    public class HotelInfo
     {
         public Guid Id { get; set; }
         public string PersonName { get; set; }
@@ -18,7 +18,7 @@ namespace HotelDirectory.Hotel.Service.Infrastruct.Data.Entities
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
-        public HotelsInfo()
+        public HotelInfo()
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTime.Now;
