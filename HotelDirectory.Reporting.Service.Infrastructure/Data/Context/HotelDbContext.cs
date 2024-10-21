@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using HotelDirectory.Hotel.Service.Infrastructure.Data.Entities;
+using HotelDirectory.Reporting.Service.Infrastructure.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
+namespace HotelDirectory.Reporting.Service.Infrastructure.Data.Context
 {
-    public class HotelDbContext : DbContext
+    public class HotelDbContext:DbContext 
     {
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -25,20 +23,20 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<HotelInfo>(entity =>
+            builder.Entity<ReportingInfo>(entity =>
             {
-                entity.ToTable("HotelInfo");
+                entity.ToTable("ReportingInfo");
             });
             builder.Entity<ContactInfo>(entity =>
             {
                 entity.ToTable("ContactInfo");
             });
-           
+
 
             base.OnModelCreating(builder);
         }
-        public DbSet<HotelInfo> HotelInfo { get; set; }
-        public DbSet<ContactInfo> ContactInfo { get; set; }
 
+        public DbSet<ReportingInfo> ReportingInfo { get; set; }
+        public DbSet<ContactInfo> ContactInfo { get; set; }
     }
 }
