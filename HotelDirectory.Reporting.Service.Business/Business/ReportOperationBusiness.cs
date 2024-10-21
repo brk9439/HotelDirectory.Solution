@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HotelDirectory.Reporting.Service.Business.Model;
 using HotelDirectory.Reporting.Service.Infrastructure.Data.Context;
 using HotelDirectory.Reporting.Service.Infrastructure.Data.Entities;
+using HotelDirectory.Reporting.Service.Infrastructure.RabbitMQClient.Interface;
 using Enum = HotelDirectory.Reporting.Service.Infrastructure.Data.Entities.Enum;
 
 namespace HotelDirectory.Reporting.Service.Business.Business
@@ -18,10 +19,17 @@ namespace HotelDirectory.Reporting.Service.Business.Business
     public class ReportOperationBusiness : IReportOperationBusiness
     {
         private readonly HotelDbContext _hotelDbContext;
+        private readonly IQueueOperation _queueOperation;
+        public ReportOperationBusiness(HotelDbContext hotelDbContext, IQueueOperation queueOperation)
+        {
+            _hotelDbContext = hotelDbContext;
+            _queueOperation = queueOperation;
+        }
+
         public async Task<string> CreateReport(string byLocation)
         {
             var location = _hotelDbContext.ContactInfo.Where(x => x.InfoType == Enum.ContactInfoType.Location && x.InfoContent.ToLower() == byLocation.ToLower());
-            if (!location.Any())
+            if (location.Any())
             {
                 ReportingInfo reportingInfo = new ReportingInfo
                 {
@@ -43,7 +51,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                     Location = reportingInfo.Location,
                 };
 
-
+                _queueOperation.ReportMessage(reportQueueRequest);
                 #endregion
                 return "Rapor talebi alındı";
             }

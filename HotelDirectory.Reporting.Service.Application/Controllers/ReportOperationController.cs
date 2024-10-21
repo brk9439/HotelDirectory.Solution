@@ -18,7 +18,7 @@ namespace HotelDirectory.Reporting.Service.Application.Controllers
         [HttpGet("CreateReport/{byLocation}")]
         public async Task<string> CreateReport(string byLocation)
         {
-            return _reportOperationBusiness.CreateReport(byLocation);
+            return await _reportOperationBusiness.CreateReport(byLocation);
         }
 
     }

@@ -8,6 +8,6 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.RabbitMQClient.Interfa
 {
     public interface IQueueOperation
     {
-
+        void ReportMessage<T>(T message);
     }
 }
