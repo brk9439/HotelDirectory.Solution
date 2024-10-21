@@ -17,8 +17,14 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Entities
 
         public enum ReportStatus
         {
-            Waiting =0,
-            Completed =1,
+            Waiting = 0,
+            Completed = 1,
+        }
+
+        public enum Status
+        {
+            Passive = 0,
+            Active = 1
         }
     }
 }

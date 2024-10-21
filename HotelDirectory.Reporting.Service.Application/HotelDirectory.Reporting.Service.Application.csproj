@@ -10,9 +10,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Business\HotelDirectory.Hotel.Service.Business.csproj" />
-    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>

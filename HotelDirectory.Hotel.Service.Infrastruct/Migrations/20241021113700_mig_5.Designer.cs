@@ -3,6 +3,7 @@ using System;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241021113700_mig_5")]
+    partial class mig_5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FK_HotelInfo")
+                    b.Property<Guid>("HotelInfoId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("InfoContent")
@@ -51,6 +54,8 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HotelInfoId");
 
                     b.ToTable("ContactInfo", (string)null);
                 });
@@ -127,6 +132,22 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportingInfo", (string)null);
+                });
+
+            modelBuilder.Entity("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.ContactInfo", b =>
+                {
+                    b.HasOne("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.HotelInfo", "HotelInfo")
+                        .WithMany("ContactInfos")
+                        .HasForeignKey("HotelInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HotelInfo");
+                });
+
+            modelBuilder.Entity("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.HotelInfo", b =>
+                {
+                    b.Navigation("ContactInfos");
                 });
 #pragma warning restore 612, 618
         }

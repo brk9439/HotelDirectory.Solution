@@ -3,6 +3,7 @@ using System;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241021114812_mig_6")]
+    partial class mig_6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,29 +31,31 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("FK_HotelInfo")
+                    b.Property<Guid>("HotelId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("InfoContent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("InfoType")
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
 
                     b.ToTable("ContactInfo", (string)null);
                 });
@@ -70,9 +75,6 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
 
                     b.Property<string>("PersonName")
                         .IsRequired()
@@ -127,6 +129,22 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportingInfo", (string)null);
+                });
+
+            modelBuilder.Entity("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.ContactInfo", b =>
+                {
+                    b.HasOne("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.HotelInfo", "Hotel")
+                        .WithMany("ContactInfos")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.HotelInfo", b =>
+                {
+                    b.Navigation("ContactInfos");
                 });
 #pragma warning restore 612, 618
         }

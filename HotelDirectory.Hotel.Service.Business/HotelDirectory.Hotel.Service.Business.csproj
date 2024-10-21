@@ -1,17 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Business\HotelDirectory.Hotel.Service.Business.csproj" />
     <ProjectReference Include="..\HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastructure.csproj" />
   </ItemGroup>
 
