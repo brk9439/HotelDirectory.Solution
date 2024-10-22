@@ -8,6 +8,8 @@ using HotelDirectory.Hotel.Service.Business.Model.Request;
 using HotelDirectory.Hotel.Service.Business.Model.Response;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Entities;
+using HotelDirectory.Shared.ElasticSearch;
+using HotelDirectory.Shared.ElasticSearch.Model;
 using Microsoft.EntityFrameworkCore;
 using Enum = HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.Enum;
 
@@ -26,10 +28,12 @@ namespace HotelDirectory.Hotel.Service.Business.Business
     public class OperationBusiness : IOperationBusiness
     {
         private readonly HotelDbContext _hotelDbContext;
-
-        public OperationBusiness(HotelDbContext hotelDbContext)
+        private readonly IElasticSearchLogger<GenericLogModel> _logger;
+        public OperationBusiness(HotelDbContext hotelDbContext, IElasticSearchLogger<GenericLogModel> logger)
         {
             _hotelDbContext = hotelDbContext;
+            _logger = logger;
+
         }
 
         public async Task<string> CreateHotel(CreateHotelRequest createHotelRequest)
@@ -169,7 +173,7 @@ namespace HotelDirectory.Hotel.Service.Business.Business
             }
             else
             {
-                var hotelInfos = _hotelDbContext.HotelInfo.Where(x =>  x.Status == Enum.Status.Active).ToList();
+                var hotelInfos = _hotelDbContext.HotelInfo.Where(x => x.Status == Enum.Status.Active).ToList();
                 List<DetailHotelResponse> detailInfos = new List<DetailHotelResponse>();
                 hotelInfos.ForEach(x => detailInfos.Add(new DetailHotelResponse
                 {
