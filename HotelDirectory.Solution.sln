@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Reporting.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Consumer", "HotelDirectory.Reporting.Service.Consumer\HotelDirectory.Reporting.Service.Consumer.csproj", "{1845ACFF-4761-4689-9F64-1506A25E578A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Test", "HotelDirectory.Test", "{AD9ABBF1-44BB-4906-896F-1042E3182E08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Test", "HotelDirectory.Test\HotelDirectory.Test.csproj", "{34212659-0A0F-4A60-8FD1-CAB4F660318E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{1845ACFF-4761-4689-9F64-1506A25E578A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1845ACFF-4761-4689-9F64-1506A25E578A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1845ACFF-4761-4689-9F64-1506A25E578A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34212659-0A0F-4A60-8FD1-CAB4F660318E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34212659-0A0F-4A60-8FD1-CAB4F660318E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34212659-0A0F-4A60-8FD1-CAB4F660318E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34212659-0A0F-4A60-8FD1-CAB4F660318E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +77,7 @@ Global
 		{D150E75A-87A4-4EA4-B940-BA56106221D5} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
 		{F418591A-4B1A-4FC6-A9E5-B45029222DE6} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
 		{1845ACFF-4761-4689-9F64-1506A25E578A} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
+		{34212659-0A0F-4A60-8FD1-CAB4F660318E} = {AD9ABBF1-44BB-4906-896F-1042E3182E08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABEC3852-C470-4FCA-9C0D-1B046969852D}
