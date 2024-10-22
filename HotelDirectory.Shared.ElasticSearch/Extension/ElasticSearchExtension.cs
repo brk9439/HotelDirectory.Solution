@@ -14,6 +14,7 @@ namespace HotelDirectory.Shared.ElasticSearch.Extension
     {
         public static IServiceCollection RegisterService(IServiceCollection services, IConfigurationRoot configuration)
         {
+
             #region ElasticSearch
             var elasticSearchUrl = configuration["ConnectionStrings:ElasticSearchConnection"];
             var indexName = "elastic-log";

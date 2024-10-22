@@ -15,6 +15,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotelDirectory.Reporting.Service.Infrastructure\HotelDirectory.Reporting.Service.Infrastructure.csproj" />
+    <ProjectReference Include="..\HotelDirectory.Shared.Common\HotelDirectory.Shared.Common.csproj" />
+    <ProjectReference Include="..\HotelDirectory.Shared.ElasticSearch\HotelDirectory.Shared.ElasticSearch.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

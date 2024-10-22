@@ -1,6 +1,0 @@
-@HotelDirectory.Reporting.Service.Application_HostAddress = http://localhost:5046
-
-GET {{HotelDirectory.Reporting.Service.Application_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

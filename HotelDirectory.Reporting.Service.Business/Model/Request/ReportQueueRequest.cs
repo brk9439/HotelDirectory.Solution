@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelDirectory.Reporting.Service.Business.Model
+namespace HotelDirectory.Reporting.Service.Business.Model.Request
 {
     public class ReportQueueRequest
     {

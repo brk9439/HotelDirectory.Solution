@@ -1,4 +1,5 @@
 using HotelDirectory.Reporting.Service.Application.Extension;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +22,22 @@ builder.Services.AddSingleton<IConfiguration>(configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    //AddSwaggerXml(options);
+    options.UseInlineDefinitionsForEnums();
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Report.Application",
+        Version = "v1",
+        Description = "Raporlama Servisi"
+    });
+});
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

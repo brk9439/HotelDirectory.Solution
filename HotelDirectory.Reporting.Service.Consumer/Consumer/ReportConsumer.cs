@@ -3,8 +3,12 @@ using HotelDirectory.Reporting.Service.Infrastructure.RabbitMQClient.Interface;
 using System.Text;
 using System.Text.Json;
 using HotelDirectory.Reporting.Service.Consumer.Model;
+using HotelDirectory.Shared.ElasticSearch;
+using HotelDirectory.Shared.ElasticSearch.Model;
 using RabbitMQ.Client.Events;
 using Enum = HotelDirectory.Reporting.Service.Infrastructure.Data.Entities.Enum;
+using HotelDirectory.Shared.Common;
+using Type = HotelDirectory.Shared.ElasticSearch.Model.Type;
 
 namespace HotelDirectory.Reporting.Service.Consumer.Consumer
 {
@@ -12,6 +16,7 @@ namespace HotelDirectory.Reporting.Service.Consumer.Consumer
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IQueueOperation _queueOperation;
+        private readonly IElasticSearchLogger<GenericLogModel> _logger;
         public ReportConsumer(IServiceScopeFactory serviceScopeFactory, IQueueOperation queueOperation)
         {
             _serviceScopeFactory = serviceScopeFactory;
@@ -51,15 +56,18 @@ namespace HotelDirectory.Reporting.Service.Consumer.Consumer
                                 _hotelDBContext.ReportingInfo.Update(reportingItem);
                                 _hotelDBContext.SaveChanges();
                             }
-                            ((EventingBasicConsumer)model).Model.BasicAck(ea.DeliveryTag,false);
+
+                            _logger.AddLog(new GenericLogModel()
+                            {
+                                Controller = "ReportConsumer",
+                                Method = "ExecuteAsync",
+                                Message = ResponseMessageConst.HandleReportRabbitMQ,
+                                Type = Type.Success
+                            });
+                            ((EventingBasicConsumer)model).Model.BasicAck(ea.DeliveryTag, false);
                         }
                         #endregion
                     }
-                    //Todo
-
-
-
-
 
                 });
             return Task.CompletedTask;

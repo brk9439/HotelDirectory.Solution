@@ -1,6 +1,7 @@
 ﻿using HotelDirectory.Hotel.Service.Business.Business;
 using HotelDirectory.Hotel.Service.Business.Model.Request;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace HotelDirectory.Hotel.Service.Application.Controllers
 {
@@ -14,6 +15,10 @@ namespace HotelDirectory.Hotel.Service.Application.Controllers
         {
             _operationBusiness = operationBusiness;
         }
+
+        [SwaggerResponse(200, "Başarılı olması durumunda kullanılan hata mesajı", typeof(HotelDirectory.Shared.Common.BaseResponseModel<string>))]
+        [SwaggerResponse(404, "Data bulunamaması durumunda kullanılan hata mesajı", typeof(HotelDirectory.Shared.Common.BaseResponseModel<string>))]
+        [SwaggerResponse(500, "Herhangi bir hata olması durumunda kullanılan hata mesajı", typeof(HotelDirectory.Shared.Common.BaseResponseModel<string>))]
         [HttpPost("CreateHotel")]
         public async Task<IActionResult> CreateHotel(CreateHotelRequest createHotelRequest)
         {
