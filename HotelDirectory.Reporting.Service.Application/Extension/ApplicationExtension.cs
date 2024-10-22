@@ -6,6 +6,7 @@
         {
 
             HotelDirectory.Reporting.Service.Business.Extension.BusinessExtension.RegisterService(services, configuration);
+            HotelDirectory.Shared.ElasticSearch.Extension.ElasticSearchExtension.RegisterService(services, configuration);
             return services;
         }
     }
