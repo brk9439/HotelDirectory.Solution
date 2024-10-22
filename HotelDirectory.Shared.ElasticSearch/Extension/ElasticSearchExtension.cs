@@ -17,11 +17,10 @@ namespace HotelDirectory.Shared.ElasticSearch.Extension
             #region ElasticSearch
             var elasticSearchUrl = configuration["ConnectionStrings:ElasticSearchConnection"];
             var indexName = "elastic-log";
-            var settings = new ConnectionSettings(new Uri(elasticSearchUrl))
-                .DefaultIndex(indexName);
+            var settings = new ConnectionSettings(new Uri(elasticSearchUrl)).DefaultIndex(indexName);
             var elasticClient = new ElasticClient(settings);
             services.AddSingleton<IElasticClient>(elasticClient);
-            services.AddScoped<ElasticSearchLogger<GenericLogModel>, ElasticSearchLogger<GenericLogModel>>();
+            services.AddScoped<IElasticSearchLogger<GenericLogModel>, ElasticSearchLogger<GenericLogModel>>();
             #endregion
 
             return services;

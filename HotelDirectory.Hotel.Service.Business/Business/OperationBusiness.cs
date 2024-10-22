@@ -12,6 +12,7 @@ using HotelDirectory.Shared.ElasticSearch;
 using HotelDirectory.Shared.ElasticSearch.Model;
 using Microsoft.EntityFrameworkCore;
 using Enum = HotelDirectory.Hotel.Service.Infrastructure.Data.Entities.Enum;
+using Type = HotelDirectory.Shared.ElasticSearch.Model.Type;
 
 namespace HotelDirectory.Hotel.Service.Business.Business
 {
@@ -47,7 +48,11 @@ namespace HotelDirectory.Hotel.Service.Business.Business
             };
             await _hotelDbContext.HotelInfo.AddAsync(hotelInfo);
             await _hotelDbContext.SaveChangesAsync();
-
+            //_logger.AddLog(new GenericLogModel
+            //{
+            //    Controller = "Operation",
+            //    Type = Type.Success
+            //});
 
             return "Kayıt başarılı";
         }
