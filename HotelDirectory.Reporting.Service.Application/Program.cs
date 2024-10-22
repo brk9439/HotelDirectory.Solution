@@ -1,5 +1,4 @@
 using HotelDirectory.Reporting.Service.Application.Extension;
-using HotelDirectory.Reporting.Service.Consumer.Consumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +40,3 @@ app.MapControllers();
 
 app.Run();
 
-static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureServices((hostContext, services) =>
-        {
-            services.AddHostedService<ReportConsumer>(); // Arka plan servisini enjekte et
-        });

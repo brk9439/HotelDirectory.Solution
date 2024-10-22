@@ -1,5 +1,4 @@
-﻿using HotelDirectory.Hotel.Service.Business.Business;
-using HotelDirectory.Reporting.Service.Business.Business;
+﻿using HotelDirectory.Reporting.Service.Business.Business;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelDirectory.Reporting.Service.Application.Controllers

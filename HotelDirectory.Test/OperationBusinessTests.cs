@@ -6,6 +6,8 @@ using HotelDirectory.Hotel.Service.Business.Business;
 using HotelDirectory.Hotel.Service.Business.Model.Request;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Entities;
+using HotelDirectory.Shared.ElasticSearch.Model;
+using HotelDirectory.Shared.ElasticSearch;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
@@ -17,6 +19,7 @@ namespace HotelDirectory.Hotel.Service.Tests
     {
         private readonly HotelDbContext _context;
         private readonly OperationBusiness _operationBusiness;
+        private readonly IElasticSearchLogger<GenericLogModel> _logger;
 
         public OperationBusinessTests()
         {
@@ -25,7 +28,7 @@ namespace HotelDirectory.Hotel.Service.Tests
             .Options;
 
             _context = new HotelDbContext(options);
-            _operationBusiness = new OperationBusiness(_context);
+            _operationBusiness = new OperationBusiness(_context, _logger);
         }
 
         [Theory]
