@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HotelDirectory.Reporting.Service.Business.Model;
+﻿using HotelDirectory.Reporting.Service.Business.Model;
 using HotelDirectory.Reporting.Service.Infrastructure.Data.Context;
 using HotelDirectory.Reporting.Service.Infrastructure.Data.Entities;
 using HotelDirectory.Reporting.Service.Infrastructure.RabbitMQClient.Interface;
@@ -51,7 +46,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                     Location = reportingInfo.Location,
                 };
 
-                _queueOperation.ReportMessage(reportQueueRequest);
+                _queueOperation.PublishMessage(reportQueueRequest, "report_queue", "report_direct", "report_key",0);
                 #endregion
                 return "Rapor talebi alındı";
             }

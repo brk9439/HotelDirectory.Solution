@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Hotel.Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Hotel.Service.Business", "HotelDirectory.Hotel.Service.Business\HotelDirectory.Hotel.Service.Business.csproj", "{F15DBF25-2B38-4609-8CD4-4B49ECEFC9AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Application", "HotelDirectory.Reporting.Service.Application\HotelDirectory.Reporting.Service.Application.csproj", "{554A5A0A-CE92-4733-8970-DB948C5DDC17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Reporting.Service.Application", "HotelDirectory.Reporting.Service.Application\HotelDirectory.Reporting.Service.Application.csproj", "{554A5A0A-CE92-4733-8970-DB948C5DDC17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Business", "HotelDirectory.Reporting.Service.Business\HotelDirectory.Reporting.Service.Business.csproj", "{D150E75A-87A4-4EA4-B940-BA56106221D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Reporting.Service.Business", "HotelDirectory.Reporting.Service.Business\HotelDirectory.Reporting.Service.Business.csproj", "{D150E75A-87A4-4EA4-B940-BA56106221D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Infrastructure", "HotelDirectory.Reporting.Service.Infrastructure\HotelDirectory.Reporting.Service.Infrastructure.csproj", "{F418591A-4B1A-4FC6-A9E5-B45029222DE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Reporting.Service.Infrastructure", "HotelDirectory.Reporting.Service.Infrastructure\HotelDirectory.Reporting.Service.Infrastructure.csproj", "{F418591A-4B1A-4FC6-A9E5-B45029222DE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Consumer", "HotelDirectory.Reporting.Service.Consumer\HotelDirectory.Reporting.Service.Consumer.csproj", "{FB602FAB-3BBD-4EF0-98B6-04CA26E59045}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Reporting.Service.Consumer", "HotelDirectory.Reporting.Service.Consumer\HotelDirectory.Reporting.Service.Consumer.csproj", "{1845ACFF-4761-4689-9F64-1506A25E578A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{F418591A-4B1A-4FC6-A9E5-B45029222DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F418591A-4B1A-4FC6-A9E5-B45029222DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F418591A-4B1A-4FC6-A9E5-B45029222DE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB602FAB-3BBD-4EF0-98B6-04CA26E59045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB602FAB-3BBD-4EF0-98B6-04CA26E59045}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB602FAB-3BBD-4EF0-98B6-04CA26E59045}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB602FAB-3BBD-4EF0-98B6-04CA26E59045}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1845ACFF-4761-4689-9F64-1506A25E578A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1845ACFF-4761-4689-9F64-1506A25E578A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1845ACFF-4761-4689-9F64-1506A25E578A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1845ACFF-4761-4689-9F64-1506A25E578A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,7 +68,7 @@ Global
 		{554A5A0A-CE92-4733-8970-DB948C5DDC17} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
 		{D150E75A-87A4-4EA4-B940-BA56106221D5} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
 		{F418591A-4B1A-4FC6-A9E5-B45029222DE6} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
-		{FB602FAB-3BBD-4EF0-98B6-04CA26E59045} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
+		{1845ACFF-4761-4689-9F64-1506A25E578A} = {5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABEC3852-C470-4FCA-9C0D-1B046969852D}
