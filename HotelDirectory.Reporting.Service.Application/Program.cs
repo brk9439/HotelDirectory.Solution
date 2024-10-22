@@ -1,5 +1,4 @@
-using HotelDirectory.Hotel.Service.Application.Extension;
-using HotelDirectory.Shared.ElasticSearch;
+using HotelDirectory.Reporting.Service.Application.Extension;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +10,6 @@ Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
 #if RELEASE
 Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Production");
 #endif
-
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -20,10 +18,10 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 builder.Services.AddSingleton<IConfiguration>(configuration);
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(options =>
 {
     //AddSwaggerXml(options);
@@ -32,15 +30,14 @@ builder.Services.AddSwaggerGen(options =>
 
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Hotel.Application",
+        Title = "Report.Application",
         Version = "v1",
-        Description = "Hotel Servisi"
+        Description = "Raporlama Servisi"
     });
 });
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -55,3 +52,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

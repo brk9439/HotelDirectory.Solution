@@ -4,13 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>b7d9f164-3bd8-4dcc-bd16-ac59db2efb7f</UserSecretsId>
+    <UserSecretsId>27916246-1b57-4ede-ab7e-d7facee1e328</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="appsettings.Production.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
@@ -19,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Business\HotelDirectory.Hotel.Service.Business.csproj" />
+    <ProjectReference Include="..\HotelDirectory.Reporting.Service.Business\HotelDirectory.Reporting.Service.Business.csproj" />
   </ItemGroup>
 
 </Project>

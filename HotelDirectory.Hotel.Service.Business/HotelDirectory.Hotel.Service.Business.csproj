@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotelDirectory.Hotel.Service.Infrastruct\HotelDirectory.Hotel.Service.Infrastructure.csproj" />
+    <ProjectReference Include="..\HotelDirectory.Shared.Common\HotelDirectory.Shared.Common.csproj" />
+    <ProjectReference Include="..\HotelDirectory.Shared.ElasticSearch\HotelDirectory.Shared.ElasticSearch.csproj" />
+  </ItemGroup>
+
+</Project>
