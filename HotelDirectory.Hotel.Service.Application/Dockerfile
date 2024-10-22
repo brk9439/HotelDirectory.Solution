@@ -12,6 +12,7 @@ WORKDIR /src
 COPY ["HotelDirectory.Hotel.Service.Application/HotelDirectory.Hotel.Service.Application.csproj", "HotelDirectory.Hotel.Service.Application/"]
 COPY ["HotelDirectory.Hotel.Service.Business/HotelDirectory.Hotel.Service.Business.csproj", "HotelDirectory.Hotel.Service.Business/"]
 COPY ["HotelDirectory.Hotel.Service.Infrastruct/HotelDirectory.Hotel.Service.Infrastructure.csproj", "HotelDirectory.Hotel.Service.Infrastruct/"]
+COPY ["HotelDirectory.Shared.Common/HotelDirectory.Shared.Common.csproj", "HotelDirectory.Shared.Common/"]
 COPY ["HotelDirectory.Shared.ElasticSearch/HotelDirectory.Shared.ElasticSearch.csproj", "HotelDirectory.Shared.ElasticSearch/"]
 RUN dotnet restore "./HotelDirectory.Hotel.Service.Application/HotelDirectory.Hotel.Service.Application.csproj"
 COPY . .
