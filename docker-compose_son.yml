@@ -1,0 +1,140 @@
+version: '3.8'
+services:
+  # Elasticsearch Service
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9201:9200"
+    networks:
+      - hotel-network
+
+  # Kibana Service
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5602:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - hotel-network
+
+  # RabbitMQ Service
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - hotel-network
+
+  # PostgreSQL Service
+  hotel-postgres:
+    image: postgres:latest
+    container_name: hotel-postgres
+    hostname: "hotel"
+    environment:
+      POSTGRES_USER: hotel_user
+      POSTGRES_PASSWORD: hotel_password
+      POSTGRES_DB: hoteldb
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hotel-network
+
+  # Hotel Directory Reporting Service Consumer
+  reporting-service-consumer:
+    build:
+      context: .
+      dockerfile: HotelDirectory.Reporting.Service.Consumer/Dockerfile
+    image: hotel-reporting-service-consumer
+    ports:
+      - "5002:80"
+    environment:
+      ConnectionStrings__Postgres: Server=hotel-postgres;Port=5432;Database=hoteldb;User Id=hotel_user;Password=hotel_password
+      RabbitMQSettings__HostName: rabbitmq
+      RabbitMQSettings__UserName: user
+      RabbitMQSettings__Password: password
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    depends_on:
+      - rabbitmq
+      - hotel-postgres
+    networks:
+      - hotel-network
+
+  # Hotel Directory Hotel Service Application
+  hotel-service-application:
+    build:
+      context: .
+      dockerfile: HotelDirectory.Hotel.Service.Application/Dockerfile
+    image: hotel-service-application
+    ports:
+      - "5003:80"
+    environment:
+      ConnectionStrings__Postgres: Server=hotel-postgres;Port=5432;Database=hoteldb;User Id=hotel_user;Password=hotel_password
+      RabbitMQSettings__HostName: rabbitmq
+      RabbitMQSettings__UserName: user
+      RabbitMQSettings__Password: password
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    depends_on:
+      - rabbitmq
+      - hotel-postgres
+    networks:
+      - hotel-network
+
+  # Hotel Directory Reporting Service Application
+  reporting-service-application:
+    build:
+      context: .
+      dockerfile: HotelDirectory.Reporting.Service.Application/Dockerfile
+    image: hotel-reporting-service-application
+    ports:
+      - "5004:80"
+    environment:
+      ConnectionStrings__Postgres: Server=hotel-postgres;Port=5432;Database=hoteldb;User Id=hotel_user;Password=hotel_password
+      RabbitMQSettings__HostName: rabbitmq
+      RabbitMQSettings__UserName: user
+      RabbitMQSettings__Password: password
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    depends_on:
+      - rabbitmq
+      - hotel-postgres
+    networks:
+      - hotel-network
+
+volumes:
+  es_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  hotel-network:
+    driver: bridge

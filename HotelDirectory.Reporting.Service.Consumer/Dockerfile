@@ -10,6 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HotelDirectory.Reporting.Service.Consumer/HotelDirectory.Reporting.Service.Consumer.csproj", "HotelDirectory.Reporting.Service.Consumer/"]
+COPY ["HotelDirectory.Reporting.Service.Infrastructure/HotelDirectory.Reporting.Service.Infrastructure.csproj", "HotelDirectory.Reporting.Service.Infrastructure/"]
 RUN dotnet restore "./HotelDirectory.Reporting.Service.Consumer/HotelDirectory.Reporting.Service.Consumer.csproj"
 COPY . .
 WORKDIR "/src/HotelDirectory.Reporting.Service.Consumer"
