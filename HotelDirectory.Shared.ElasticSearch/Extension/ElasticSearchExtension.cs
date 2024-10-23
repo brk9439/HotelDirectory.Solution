@@ -21,7 +21,8 @@ namespace HotelDirectory.Shared.ElasticSearch.Extension
             var settings = new ConnectionSettings(new Uri(elasticSearchUrl)).DefaultIndex(indexName);
             var elasticClient = new ElasticClient(settings);
             services.AddSingleton<IElasticClient>(elasticClient);
-            services.AddScoped<IElasticSearchLogger<GenericLogModel>, ElasticSearchLogger<GenericLogModel>>();
+            //services.AddScoped<IElasticSearchLogger<GenericLogModel>, ElasticSearchLogger<GenericLogModel>>();
+            services.AddScoped(typeof(IElasticSearchLogger<>), typeof(ElasticSearchLogger<>));
             #endregion
 
             return services;

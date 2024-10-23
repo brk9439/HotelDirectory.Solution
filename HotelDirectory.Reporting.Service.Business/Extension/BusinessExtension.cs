@@ -20,7 +20,7 @@ namespace HotelDirectory.Reporting.Service.Business.Extension
             HotelDirectory.Shared.ElasticSearch.Extension.ElasticSearchExtension.RegisterService(services, configuration);
             services.AddScoped<IReportOperationBusiness, ReportOperationBusiness>();
 
-
+            
             return services;
         }
     }
