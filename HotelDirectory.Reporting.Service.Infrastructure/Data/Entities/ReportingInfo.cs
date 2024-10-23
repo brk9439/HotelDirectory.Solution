@@ -21,7 +21,7 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.Data.Entities
         public ReportingInfo()
         {
             Id = Guid.NewGuid();
-            CreatedDate = DateTime.Now;
+            CreatedDate = DateTime.UtcNow;
         }
     }
 

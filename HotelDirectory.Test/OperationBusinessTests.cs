@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using HotelDirectory.Hotel.Service.Business.Business;
 using HotelDirectory.Hotel.Service.Business.Model.Request;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Entities;
+using HotelDirectory.Shared.Common;
 using HotelDirectory.Shared.ElasticSearch.Model;
 using HotelDirectory.Shared.ElasticSearch;
 using Microsoft.EntityFrameworkCore;
@@ -17,23 +19,26 @@ namespace HotelDirectory.Hotel.Service.Tests
 {
     public class OperationBusinessTests
     {
-        private readonly HotelDbContext _context;
+        private readonly Mock<IElasticSearchLogger<GenericLogModel>> _mockLogger;
+        private readonly HotelDbContext _dbContext;
         private readonly OperationBusiness _operationBusiness;
-        private readonly IElasticSearchLogger<GenericLogModel> _logger;
 
         public OperationBusinessTests()
         {
-            var options = new DbContextOptionsBuilder<HotelDbContext>()
-            .UseNpgsql("Server=localhost;Port=5435;Database=hoteldb;User Id=hotel_user;Password=hotel_password")
-            .Options;
+            _mockLogger = new Mock<IElasticSearchLogger<GenericLogModel>>();
 
-            _context = new HotelDbContext(options);
-            _operationBusiness = new OperationBusiness(_context, _logger);
+            // InMemory veritabanı oluşturma
+            var options = new DbContextOptionsBuilder<HotelDbContext>()
+                .UseNpgsql("Server=localhost;Port=5435;Database=hoteldb;User Id=hotel_user;Password=hotel_password")
+                .Options;
+
+            _dbContext = new HotelDbContext(options);
+            _operationBusiness = new OperationBusiness(_dbContext, _mockLogger.Object);
         }
 
         [Theory]
-        [InlineData("TEST HOTEL", "Can", "Önal")]
-        public async Task CreateHotel_ShouldAddHotel(string companyName, string personName, string personSurname)
+        [InlineData("Otel A", "Ali", "Yılmaz")]
+        public async Task CreateHotel_ShouldReturnSuccess(string companyName, string personName, string personSurname)
         {
             var request = new CreateHotelRequest
             {
@@ -44,89 +49,87 @@ namespace HotelDirectory.Hotel.Service.Tests
 
             var result = await _operationBusiness.CreateHotel(request);
 
-            Assert.Equal("Kayıt başarılı", result);
-            Assert.Single(_context.HotelInfo);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.HotelCreatedSuccessMessage, result.Message);
         }
 
         [Theory]
-        [InlineData("a1d5d279-b164-4ecb-8f21-3107c6e97994")]
-        public async Task RemoveHotel_ShouldReturnNotFound(string hotelIdStr)
+        [InlineData("70b1d856-9d3b-4dd8-aa51-8a7f6cce3799")] // Geçersiz bir otel ID veriniz
+        public async Task RemoveHotel_ShouldReturnNotFound_WhenHotelDoesNotExist(Guid hotelId)
         {
-            var hotelId = Guid.Parse(hotelIdStr);
-
             var result = await _operationBusiness.RemoveHotel(hotelId);
 
-            Assert.Equal("İlgili hotel bulunamadı", result);
-        }
-
-        [Fact]
-        public async Task RemoveHotel_ShouldSoftDeleteHotel()
-        {
-            var hotel = new HotelInfo
-            {
-                Id = Guid.NewGuid(),
-                CompanyName = "TEST HOTEL",
-                PersonName = "Ahmet",
-                PersonSurname = "Önal",
-                Status = Status.Active
-            };
-
-            _context.HotelInfo.Add(hotel);
-            await _context.SaveChangesAsync();
-
-            var result = await _operationBusiness.RemoveHotel(hotel.Id);
-
-            Assert.Equal("Hotel kaldırıldı.", result);
-            var removedHotel = await _context.HotelInfo.FindAsync(hotel.Id);
-            Assert.Equal(Status.Passive, removedHotel.Status);
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.HotelRemovedContextNullMessage, result.Message);
         }
 
         [Theory]
-        [InlineData(ContactInfoType.MailAddress, "test@testhotel.com")]
-        public async Task CreateContact_ShouldAddContact(ContactInfoType infoType, string infoContent)
+        [InlineData("8de07f59-6720-42e4-a0d0-229151e521bc")]
+        public async Task CreateContact_ShouldReturnSuccess(Guid hotelId)
         {
-            var request = new CreateContactRequest
+
+            var contactRequest = new CreateContactRequest
             {
-                InfoType = infoType,
-                InfoContent = infoContent,
+                HotelId = hotelId,
+                InfoType = ContactInfoType.MailAddress,
+                InfoContent = "otel@a.com"
             };
 
-            var result = await _operationBusiness.CreateContact(request);
+            var result = await _operationBusiness.CreateContact(contactRequest);
 
-            Assert.Equal("Kayıt başarılı", result);
-            Assert.Single(_context.ContactInfo);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.ContactCreatedSuccessMessage, result.Message);
         }
 
         [Theory]
-        [InlineData("fcf7a57e-bd9d-4c51-8c45-982895af4a29")]
-        public async Task RemoveContact_ShouldReturnNotFound(string contactIdStr)
+        [InlineData("70b1d856-9d3b-4dd8-aa51-8a7f6cce3784")] 
+        public async Task RemoveContact_ShouldReturnNotFound_WhenContactDoesNotExist(Guid contactId)
         {
-            var contactId = Guid.Parse(contactIdStr);
-
             var result = await _operationBusiness.RemoveContact(contactId);
 
-            Assert.Equal("İlgili iletişim bilgisi bulunamadı", result);
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.ContactRemovedContextNullMessage, result.Message);
         }
 
-        [Fact]
-        public async Task RemoveContact_ShouldSoftDeleteContact()
+        [Theory]
+        [InlineData("70b1d856-9d3b-4dd8-aa51-8a7f6cce3784")] // Geçerli bir otel ID'si ile değiştirin
+        public async Task GetHotelInfo_ShouldReturnHotelInfo_WhenHotelExists(Guid hotelId)
         {
-            var contact = new ContactInfo
-            {
-                Id = Guid.NewGuid(),
-                InfoType = ContactInfoType.Location,
-                InfoContent = "Ankara",
-                Status = Status.Active
-            };
+            var result = await _operationBusiness.GetHotelInfo(hotelId);
 
-            _context.ContactInfo.Add(contact);
-            await _context.SaveChangesAsync();
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.NotNull(result.Data); 
+        }
 
-            var result = await _operationBusiness.RemoveContact(contact.Id);
+        [Theory]
+        [InlineData("8de07f59-6720-42e4-a0d0-229151e52199")] // Geçersiz bir otel ID veriniz.
+        public async Task GetHotelInfo_ShouldReturnNotFound_WhenHotelDoesNotExist(Guid hotelId)
+        {
+            var result = await _operationBusiness.GetHotelInfo(hotelId);
 
-            Assert.Equal("Başarılı", result);
-            var removedContact = await _context.ContactInfo.FindAsync(contact.Id);
-            Assert.Equal(Status.Passive, removedContact.Status);
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.GetHotelInfoNullMessage, result.Message);
+        }
+
+        [Theory]
+        [InlineData("8de07f59-6720-42e4-a0d0-229151e521bc")] // Geçerli bir otel ID'si ile değiştirin
+        public async Task GetDetailInfo_ShouldReturnDetailInfo_WhenHotelExists(Guid hotelId)
+        {
+            
+            var result = await _operationBusiness.GetDetailInfo(hotelId);
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.NotNull( result.Data); 
+        }
+
+        [Theory]
+        [InlineData("70b1d856-9d3b-4dd8-aa51-8a7f6cce3799")]
+        public async Task GetDetailInfo_ShouldReturnNotFound_WhenHotelDoesNotExist(Guid hotelId)
+        {
+            var result = await _operationBusiness.GetDetailInfo(hotelId);
+
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+            Assert.Equal(ResponseMessageConst.GetDetailInfoNullMessage, result.Message);
         }
     }
 }

@@ -39,10 +39,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-//builder.Services.AddDbContext<HotelDbContext>(options =>
-//{
-//    options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
-//});
 
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();

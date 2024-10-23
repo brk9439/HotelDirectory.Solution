@@ -19,7 +19,7 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.Data.Entities
         public ContactInfo()
         {
             Id = Guid.NewGuid();
-            CreatedDate = DateTime.Now;
+            CreatedDate = DateTime.UtcNow;
         }
     }
 }

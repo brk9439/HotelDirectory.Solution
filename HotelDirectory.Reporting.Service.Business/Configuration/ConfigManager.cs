@@ -15,5 +15,21 @@ namespace HotelDirectory.Reporting.Service.Business.Configuration
         {
             _configuration = configuration;
         }
+
+        public ReportQueueMessageConfiguration ReportQueueMessageConfiguration => new ReportQueueMessageConfiguration
+        {
+            QueueName = _configuration.GetValue<string>("ReportQueueMessageConfiguration:QueueName"),
+            ExchangeName = _configuration.GetValue<string>("ReportQueueMessageConfiguration:ExchangeName"),
+            RoutingKeyName = _configuration.GetValue<string>("ReportQueueMessageConfiguration:RoutingKeyName"),
+            MessageTtl = _configuration.GetValue<int>("ReportQueueMessageConfiguration:MessageTtl")
+        };
+        
+    }
+    public class ReportQueueMessageConfiguration
+    {
+        public string QueueName { get; set; }
+        public string ExchangeName { get; set; }
+        public string RoutingKeyName { get; set; }
+        public int MessageTtl { get; set; }
     }
 }

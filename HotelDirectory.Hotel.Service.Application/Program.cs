@@ -59,24 +59,6 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate(); // Otomatik göçleri uygula
 }
 
-// Veritabanýný güncelle ve otomatik göç oluþtur
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
-
-//    // Veritabanýný güncelle (varsa)
-//    dbContext.Database.EnsureCreated(); // Veritabaný yoksa oluþturur
-
-//    // Göçleri otomatik olarak oluþtur
-//    var migrator = dbContext.Database.GetService<IMigrator>();
-//    var pendingMigrations = dbContext.Database.GetPendingMigrations();
-//    if (pendingMigrations.Any())
-//    {
-//        migrator.Migrate();
-//    }
-//}
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
