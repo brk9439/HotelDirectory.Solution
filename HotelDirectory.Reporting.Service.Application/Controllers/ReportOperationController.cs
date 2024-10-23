@@ -30,5 +30,11 @@ namespace HotelDirectory.Reporting.Service.Application.Controllers
             return Ok(await _reportOperationBusiness.GetListReport());
         }
 
+        [HttpGet("GetReport")]
+        public async Task<IActionResult> GetReport(Guid reportId)
+        {
+            return Ok(await _reportOperationBusiness.GetReport(reportId));
+        }
+
     }
 }

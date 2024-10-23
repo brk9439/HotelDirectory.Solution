@@ -18,10 +18,7 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Extension
             //PostgreSql Timestamp
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-            services.AddDbContext<HotelDbContext>(options =>
-            {
-                options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
-            });
+            
             #endregion
 
 

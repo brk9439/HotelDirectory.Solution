@@ -17,6 +17,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
     {
         Task<BaseResponseModel<object>> CreateReport(string byLocation);
         Task<BaseResponseModel<object>> GetListReport();
+        Task<BaseResponseModel<object>> GetReport(Guid reportId);
     }
 
     public class ReportOperationBusiness : IReportOperationBusiness
@@ -71,7 +72,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                 {
                     Controller = "ReportOperation",
                     Method = "CreateReport",
-                    Message = ResponseMessageConst.HotelCreatedSuccessMessage,
+                    Message = ResponseMessageConst.CreateReportSuccessMessage,
                     Type = Type.Success
                 });
                 return new BaseResponseModel<object>

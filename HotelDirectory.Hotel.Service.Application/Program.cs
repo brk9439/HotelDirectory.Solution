@@ -1,5 +1,7 @@
 using HotelDirectory.Hotel.Service.Application.Extension;
+using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Shared.ElasticSearch;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +38,10 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "Hotel Servisi"
     });
+});
+builder.Services.AddDbContext<HotelDbContext>(options =>
+{
+    options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
 });
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();

@@ -37,6 +37,7 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Raporlama Servisi"
     });
 });
+
 builder.Services.AddDbContext<HotelDbContext>(options =>
 {
     options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
