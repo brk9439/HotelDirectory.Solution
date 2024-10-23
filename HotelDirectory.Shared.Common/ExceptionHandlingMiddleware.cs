@@ -1,12 +1,6 @@
 ﻿using HotelDirectory.Shared.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Net;
-using HotelDirectory.Shared.Common;
-using HotelDirectory.Shared.ElasticSearch;
-using HotelDirectory.Shared.ElasticSearch.Model;
-using Type = HotelDirectory.Shared.ElasticSearch.Model.Type;
 
 
 public class ExceptionHandlingMiddleware
