@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -51,7 +51,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();

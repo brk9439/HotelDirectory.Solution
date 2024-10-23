@@ -16,11 +16,12 @@ namespace HotelDirectory.Reporting.Service.Consumer.Consumer
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IQueueOperation _queueOperation;
-        private readonly IElasticSearchLogger<GenericLogModel> _logger;
+
         public ReportConsumer(IServiceScopeFactory serviceScopeFactory, IQueueOperation queueOperation)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _queueOperation = queueOperation;
+
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,6 +32,8 @@ namespace HotelDirectory.Reporting.Service.Consumer.Consumer
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
                         var _hotelDBContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+                        var _logger = scope.ServiceProvider.GetRequiredService<IElasticSearchLogger<GenericLogModel>>();
+
                         var body = ea.Body.ToArray();
                         var message = Encoding.UTF8.GetString(body);
                         var reportResponse = JsonSerializer.Deserialize<ReportDTO>(message);

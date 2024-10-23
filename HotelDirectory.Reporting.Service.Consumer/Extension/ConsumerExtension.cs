@@ -10,6 +10,7 @@ namespace HotelDirectory.Reporting.Service.Consumer.Extension
             //services.AddSingleton<ConfigManager>();
             services.AddHostedService<ReportConsumer>();
             HotelDirectory.Reporting.Service.Infrastructure.Extension.InfrastructureExtension.RegisterService(services, configuration);
+            HotelDirectory.Shared.ElasticSearch.Extension.ElasticSearchExtension.RegisterService(services,configuration);
             ConfigureReportQueueSystem(services, configuration);
             return services;
         }

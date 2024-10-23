@@ -1,4 +1,6 @@
 using HotelDirectory.Reporting.Service.Application.Extension;
+using HotelDirectory.Reporting.Service.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,9 +37,14 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Raporlama Servisi"
     });
 });
+builder.Services.AddDbContext<HotelDbContext>(options =>
+{
+    options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
+});
+
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,7 +55,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
