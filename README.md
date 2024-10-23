@@ -1,6 +1,6 @@
 # HotelDirectory.Solution
 -----------------------------------------------------------------------------------------------------------------------------------------------
-# Çalıştır
+# ReadME
 # C:\ altında, HotelService adında bir klasör oluşturup GitHub'taki klon linki üzerinden proje dosyalarını indirip oluşturunuz.
 # Veri bağlantısı için postgresql veritabanını aşağıdaki bilgiler ile oluşturmalısınız. Tablo yapısı uygulama ayağa kalktığında oluşacaktır.
 # Terminal üzerinden projenin bulunduğu dizine gidip  "C:\HotelService"  "docker-compose up" komutu ile Projeye ait tüm conteinerları ayağa kaldırıyoruz.
