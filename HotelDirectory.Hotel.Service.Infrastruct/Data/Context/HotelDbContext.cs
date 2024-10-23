@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
 {
+    
+    
     public class HotelDbContext : DbContext
     {
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
