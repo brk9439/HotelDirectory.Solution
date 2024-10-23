@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelDirectory.Hotel.Service.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    partial class HotelDbContextModelSnapshot2 : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

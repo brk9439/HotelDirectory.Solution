@@ -6,9 +6,11 @@ using HotelDirectory.Shared.ElasticSearch.Model;
 using HotelDirectory.Shared.ElasticSearch;
 using Enum = HotelDirectory.Reporting.Service.Infrastructure.Data.Entities.Enum;
 using System.Net;
+using HotelDirectory.Reporting.Service.Business.Configuration;
 using Type = HotelDirectory.Shared.ElasticSearch.Model.Type;
 using HotelDirectory.Reporting.Service.Business.Model.Request;
 using HotelDirectory.Reporting.Service.Business.Model.Response;
+using Microsoft.Extensions.Configuration;
 using Nest;
 
 namespace HotelDirectory.Reporting.Service.Business.Business
@@ -17,6 +19,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
     {
         Task<BaseResponseModel<object>> CreateReport(string byLocation);
         Task<BaseResponseModel<object>> GetListReport();
+        Task<BaseResponseModel<object>> GetReport(Guid reportId);
     }
 
     public class ReportOperationBusiness : IReportOperationBusiness
@@ -24,11 +27,13 @@ namespace HotelDirectory.Reporting.Service.Business.Business
         private readonly HotelDbContext _hotelDbContext;
         private readonly IQueueOperation _queueOperation;
         private readonly IElasticSearchLogger<GenericLogModel> _logger;
-        public ReportOperationBusiness(HotelDbContext hotelDbContext, IQueueOperation queueOperation, IElasticSearchLogger<GenericLogModel> logger)
+        private readonly ConfigManager _config;
+        public ReportOperationBusiness(HotelDbContext hotelDbContext, IQueueOperation queueOperation, IElasticSearchLogger<GenericLogModel> logger, ConfigManager config)
         {
             _hotelDbContext = hotelDbContext;
             _queueOperation = queueOperation;
             _logger = logger;
+            _config = config;
         }
 
         public async Task<BaseResponseModel<object>> CreateReport(string byLocation)
@@ -40,8 +45,8 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                 {
                     HotelCount = 0,
                     PhoneCount = 0,
-                    GetDate = DateTime.Now,
-                    CreatedDate = DateTime.Now,
+                    GetDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow,
                     Location = location.FirstOrDefault().InfoContent.ToLower(),
                     Status = Enum.ReportStatus.Waiting
                 };
@@ -63,7 +68,11 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                     ReportId = reportingInfo.Id,
                     Location = reportingInfo.Location,
                 };
-                _queueOperation.PublishMessage(reportQueueRequest, "report_queue", "report_direct", "report_key", 0);
+                _queueOperation.PublishMessage(reportQueueRequest,
+                    _config.ReportQueueMessageConfiguration.QueueName,
+                    _config.ReportQueueMessageConfiguration.ExchangeName,
+                    _config.ReportQueueMessageConfiguration.RoutingKeyName,
+                    _config.ReportQueueMessageConfiguration.MessageTtl);
 
                 #endregion
 
@@ -71,7 +80,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
                 {
                     Controller = "ReportOperation",
                     Method = "CreateReport",
-                    Message = ResponseMessageConst.HotelCreatedSuccessMessage,
+                    Message = ResponseMessageConst.CreateReportSuccessMessage,
                     Type = Type.Success
                 });
                 return new BaseResponseModel<object>
@@ -154,7 +163,7 @@ namespace HotelDirectory.Reporting.Service.Business.Business
         public async Task<BaseResponseModel<object>> GetReport(Guid reportId)
         {
             var reportInfo = _hotelDbContext.ReportingInfo.SingleOrDefault(x => x.Id == reportId);
-            if (reportInfo == null)
+            if (reportInfo != null)
             {
                 var result = new ReportResponse()
                 {

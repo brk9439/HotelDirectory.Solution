@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Gateway.Api", "HotelDirectory.Gateway.Api", "{5EEAC8C8-86C1-4359-AAC0-EEA5327E12A5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Hotel.Service", "HotelDirectory.Hotel.Service", "{7A078FAA-94F0-4276-BE45-72B202DBA378}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Reporting.Service", "HotelDirectory.Reporting.Service", "{5D2C606D-A3E2-4C9C-8AC0-9070F2C88432}"
@@ -31,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelDirectory.Shared", "Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Shared.ElasticSearch", "HotelDirectory.Shared.ElasticSearch\HotelDirectory.Shared.ElasticSearch.csproj", "{950249F6-001C-49EE-A240-5ECB39FC9E88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelDirectory.Shared.Common", "HotelDirectory.Shared.Common\HotelDirectory.Shared.Common.csproj", "{9851CDE9-9A99-4A67-A23C-EA0BF1E385CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelDirectory.Shared.Common", "HotelDirectory.Shared.Common\HotelDirectory.Shared.Common.csproj", "{9851CDE9-9A99-4A67-A23C-EA0BF1E385CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

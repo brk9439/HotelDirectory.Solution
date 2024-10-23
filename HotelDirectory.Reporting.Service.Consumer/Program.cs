@@ -1,5 +1,7 @@
 using HotelDirectory.Reporting.Service.Consumer.Consumer;
 using HotelDirectory.Reporting.Service.Consumer.Extension;
+using HotelDirectory.Reporting.Service.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<HotelDbContext>(options =>
+{
+    options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
+});
 ConsumerExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
 

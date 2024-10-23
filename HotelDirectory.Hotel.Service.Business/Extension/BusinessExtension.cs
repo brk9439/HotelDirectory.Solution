@@ -18,6 +18,7 @@ namespace HotelDirectory.Hotel.Service.Business.Extension
             services.AddSingleton<ConfigManager>();
             services.AddScoped<IOperationBusiness, OperationBusiness>();
             HotelDirectory.Hotel.Service.Infrastructure.Extension.InfrastructureExtension.RegisterService(services, configuration);
+            HotelDirectory.Shared.ElasticSearch.Extension.ElasticSearchExtension.RegisterService(services, configuration);
             return services;
         }
     }

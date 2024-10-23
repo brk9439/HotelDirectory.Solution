@@ -22,6 +22,39 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HotelDirectory.Reporting.Service.Infrastructure.Data.Entities.ContactInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FK_HotelInfo")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("InfoContent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("InfoType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactInfo", (string)null);
+                });
+
             modelBuilder.Entity("HotelDirectory.Reporting.Service.Infrastructure.Data.Entities.ReportingInfo", b =>
                 {
                     b.Property<Guid>("Id")

@@ -1,4 +1,7 @@
 using HotelDirectory.Reporting.Service.Application.Extension;
+using HotelDirectory.Reporting.Service.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,9 +38,15 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Raporlama Servisi"
     });
 });
+
+
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    dbContext.Database.Migrate(); // Otomatik göçleri uygula
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,8 +57,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
+
 
 app.Run();
 

@@ -10,15 +10,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HotelDirectory.Reporting.Service.Application/HotelDirectory.Reporting.Service.Application.csproj", "HotelDirectory.Reporting.Service.Application/"]
-COPY ["HotelDirectory.Hotel.Service.Business/HotelDirectory.Hotel.Service.Business.csproj", "HotelDirectory.Hotel.Service.Business/"]
-COPY ["HotelDirectory.Hotel.Service.Infrastruct/HotelDirectory.Hotel.Service.Infrastructure.csproj", "HotelDirectory.Hotel.Service.Infrastruct/"]
-COPY ["HotelDirectory.Shared.ElasticSearch/HotelDirectory.Shared.ElasticSearch.csproj", "HotelDirectory.Shared.ElasticSearch/"]
 COPY ["HotelDirectory.Reporting.Service.Business/HotelDirectory.Reporting.Service.Business.csproj", "HotelDirectory.Reporting.Service.Business/"]
 COPY ["HotelDirectory.Reporting.Service.Infrastructure/HotelDirectory.Reporting.Service.Infrastructure.csproj", "HotelDirectory.Reporting.Service.Infrastructure/"]
-COPY ["HotelDirectory.Reporting.Service.Consumer/HotelDirectory.Reporting.Service.Consumer.csproj", "HotelDirectory.Reporting.Service.Consumer/"]
+COPY ["HotelDirectory.Shared.Common/HotelDirectory.Shared.Common.csproj", "HotelDirectory.Shared.Common/"]
+COPY ["HotelDirectory.Shared.ElasticSearch/HotelDirectory.Shared.ElasticSearch.csproj", "HotelDirectory.Shared.ElasticSearch/"]
 RUN dotnet restore "./HotelDirectory.Reporting.Service.Application/HotelDirectory.Reporting.Service.Application.csproj"
 COPY . .
 WORKDIR "/src/HotelDirectory.Reporting.Service.Application"
+
 RUN dotnet build "./HotelDirectory.Reporting.Service.Application.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

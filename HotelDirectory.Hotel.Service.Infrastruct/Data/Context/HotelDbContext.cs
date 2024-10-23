@@ -12,14 +12,7 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
 {
     public class HotelDbContext : DbContext
     {
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //    //optionsBuilder.UseNpgsql(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["HotelDbConnection"]);
-        //    optionsBuilder.UseNpgsql("Server=localhost;Port=5435;Database=hoteldb;User Id=hotel_user;Password=hotel_password");
-        //}
-
-        public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
+       public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
         {
 
         }
@@ -33,9 +26,9 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
             {
                 entity.ToTable("ContactInfo");
             });
-           
 
             base.OnModelCreating(builder);
+
         }
         public DbSet<HotelInfo> HotelInfo { get; set; }
         public DbSet<ContactInfo> ContactInfo { get; set; }

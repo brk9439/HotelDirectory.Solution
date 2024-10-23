@@ -15,11 +15,11 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Entities
         public Enum.Status Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; } 
+        public DateTime? DeletedDate { get; set; }
         public ContactInfo()
         {
             Id = Guid.NewGuid();
-            CreatedDate = DateTime.Now;
+            CreatedDate = DateTime.UtcNow;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.Extension
             {
                 options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
             });
+
             #endregion
 
             #region RabbitMQ

@@ -2,6 +2,7 @@
 using HotelDirectory.Reporting.Service.Infrastructure.RabbitMQClient.Interface;
 using System.Text;
 using System.Text.Json;
+using HotelDirectory.Reporting.Service.Consumer.Configuration;
 using HotelDirectory.Reporting.Service.Consumer.Model;
 using HotelDirectory.Shared.ElasticSearch;
 using HotelDirectory.Shared.ElasticSearch.Model;
@@ -16,21 +17,25 @@ namespace HotelDirectory.Reporting.Service.Consumer.Consumer
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IQueueOperation _queueOperation;
-        private readonly IElasticSearchLogger<GenericLogModel> _logger;
-        public ReportConsumer(IServiceScopeFactory serviceScopeFactory, IQueueOperation queueOperation)
+        private readonly ConfigManager _config;
+
+        public ReportConsumer(IServiceScopeFactory serviceScopeFactory, IQueueOperation queueOperation, ConfigManager config)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _queueOperation = queueOperation;
+            _config = config;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _queueOperation.ConsumeQueue("report_queue", "report_direct", "direct", "report_key", 1,
+            _queueOperation.ConsumeQueue(_config.ConsumeQueueConfiguration.QueueName, _config.ConsumeQueueConfiguration.ExchangeName, _config.ConsumeQueueConfiguration.ExchangeType,_config.ConsumeQueueConfiguration.RoutingKeyName, _config.ConsumeQueueConfiguration.PrefetchCount,
                 receivedEventHandler: (model, ea) =>
                 {
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
                         var _hotelDBContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+                        var _logger = scope.ServiceProvider.GetRequiredService<IElasticSearchLogger<GenericLogModel>>();
+
                         var body = ea.Body.ToArray();
                         var message = Encoding.UTF8.GetString(body);
                         var reportResponse = JsonSerializer.Deserialize<ReportDTO>(message);

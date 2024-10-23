@@ -14,10 +14,13 @@ namespace HotelDirectory.Reporting.Service.Business.Extension
     {
         public static IServiceCollection RegisterService(IServiceCollection services, IConfigurationRoot configuration)
         {
+
             services.AddSingleton<ConfigManager>();
+            HotelDirectory.Reporting.Service.Infrastructure.Extension.InfrastructureExtension.RegisterService(services, configuration);
+            HotelDirectory.Shared.ElasticSearch.Extension.ElasticSearchExtension.RegisterService(services, configuration);
             services.AddScoped<IReportOperationBusiness, ReportOperationBusiness>();
-            HotelDirectory.Reporting.Service.Infrastructure.Extension.InfrastructureExtension.RegisterService(services,
-                configuration);
+
+            
             return services;
         }
     }

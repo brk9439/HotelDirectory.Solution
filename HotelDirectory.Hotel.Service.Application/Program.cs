@@ -1,5 +1,10 @@
 using HotelDirectory.Hotel.Service.Application.Extension;
+using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Shared.ElasticSearch;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,9 +42,22 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Hotel Servisi"
     });
 });
+
+//PostgreSql Timestamp
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+builder.Services.AddDbContext<HotelDbContext>(options =>
+{
+    options.UseNpgsql(configuration.GetSection("ConnectionStrings:HotelDbConnection").Value);
+});
+
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    dbContext.Database.Migrate(); // Otomatik göçleri uygula
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -51,7 +69,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
