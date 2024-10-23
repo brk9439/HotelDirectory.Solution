@@ -34,7 +34,7 @@ namespace HotelDirectory.Reporting.Service.Infrastructure.Data.Context
                 entity.ToTable("ContactInfo");
             });
 
-
+            //Database.MigrateAsync();
             base.OnModelCreating(builder);
         }
 

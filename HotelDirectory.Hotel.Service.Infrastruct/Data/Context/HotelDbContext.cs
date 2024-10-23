@@ -10,8 +10,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
 {
-    
-    
     public class HotelDbContext : DbContext
     {
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,9 +33,9 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Data.Context
             {
                 entity.ToTable("ContactInfo");
             });
-           
 
             base.OnModelCreating(builder);
+
         }
         public DbSet<HotelInfo> HotelInfo { get; set; }
         public DbSet<ContactInfo> ContactInfo { get; set; }

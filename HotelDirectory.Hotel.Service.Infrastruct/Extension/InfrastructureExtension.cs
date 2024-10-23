@@ -15,8 +15,7 @@ namespace HotelDirectory.Hotel.Service.Infrastructure.Extension
         public static IServiceCollection RegisterService(IServiceCollection services, IConfigurationRoot configuration)
         {
             #region Postgres
-            //PostgreSql Timestamp
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            
 
             
             #endregion

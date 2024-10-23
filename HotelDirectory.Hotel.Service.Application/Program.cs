@@ -2,6 +2,8 @@ using HotelDirectory.Hotel.Service.Application.Extension;
 using HotelDirectory.Hotel.Service.Infrastructure.Data.Context;
 using HotelDirectory.Shared.ElasticSearch;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -41,6 +43,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+//PostgreSql Timestamp
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDbContext<HotelDbContext>(options =>
 {
@@ -49,6 +53,28 @@ builder.Services.AddDbContext<HotelDbContext>(options =>
 
 ApplicationExtension.RegisterService(builder.Services, configuration);
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    dbContext.Database.Migrate(); // Otomatik göçleri uygula
+}
+
+// Veritabanýný güncelle ve otomatik göç oluþtur
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+
+//    // Veritabanýný güncelle (varsa)
+//    dbContext.Database.EnsureCreated(); // Veritabaný yoksa oluþturur
+
+//    // Göçleri otomatik olarak oluþtur
+//    var migrator = dbContext.Database.GetService<IMigrator>();
+//    var pendingMigrations = dbContext.Database.GetPendingMigrations();
+//    if (pendingMigrations.Any())
+//    {
+//        migrator.Migrate();
+//    }
+//}
 
 
 // Configure the HTTP request pipeline.
