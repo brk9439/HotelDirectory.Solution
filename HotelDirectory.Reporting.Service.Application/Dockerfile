@@ -17,7 +17,7 @@ COPY ["HotelDirectory.Shared.ElasticSearch/HotelDirectory.Shared.ElasticSearch.c
 RUN dotnet restore "./HotelDirectory.Reporting.Service.Application/HotelDirectory.Reporting.Service.Application.csproj"
 COPY . .
 WORKDIR "/src/HotelDirectory.Reporting.Service.Application"
-RUN dotnet ef migrations add InitialMigration -- startup-project "HotelDirectory.Reporting.Service.Application" --output-dir Migrations
+
 RUN dotnet build "./HotelDirectory.Reporting.Service.Application.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
